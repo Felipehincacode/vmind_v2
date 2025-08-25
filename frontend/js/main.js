@@ -12,7 +12,6 @@ function initializeApp() {
     setupProgressAnimation();
     setupLeaderboardAnimations();
     setupParallaxEffects();
-    setupRocketProgress();
     setupRoadmapSystem();
     setupScrolltellingEffects();
 }
@@ -623,139 +622,55 @@ function createParticleEffect(element, isFinal = false) {
 
 
 
-// ===== SISTEMA DE PROGRESO CON COHETE =====
-function setupRocketProgress() {
-    const progressNumber = document.getElementById('progressNumber');
-    const rocketProgress = document.getElementById('rocketProgress');
-    let currentProgress = 0;
-    let hasAnimated = false;
-    
-    function updateProgress() {
-        const progress = Math.min(currentProgress, 100);
-        progressNumber.textContent = `${progress}%`;
-        
-        // Cambiar color según el progreso
-        if (progress <= 30) {
-            progressNumber.style.color = '#FFD700'; // Amarillo crítico
-        } else if (progress <= 60) {
-            progressNumber.style.color = '#FFA500'; // Naranja
-        } else if (progress <= 90) {
-            progressNumber.style.color = '#32CD32'; // Verde claro
-        } else {
-            progressNumber.style.color = '#00FF00'; // Verde estable
-        }
-        
-        currentProgress += 1;
-        
-        if (currentProgress <= 100) {
-            setTimeout(updateProgress, 40); // 40ms = 4 segundos total para llegar a 100%
-        }
-    }
-    
-    // Iniciar la animación cuando la sección sea visible
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !hasAnimated) {
-                hasAnimated = true;
-                setTimeout(() => {
-                    currentProgress = 0;
-                    rocketProgress.classList.add('animate');
-                    updateProgress();
-                }, 1000);
-            }
-        });
-    });
-    
-    const progressContainer = document.querySelector('.progress-container');
-    if (progressContainer) {
-        observer.observe(progressContainer);
-    }
-}
-
 // ===== SISTEMA DE MAPA CONCEPTUAL =====
 function setupRoadmapSystem() {
     const pythonPlanet = document.getElementById('pythonPlanet');
-    const databasePlanet = document.getElementById('databasePlanet');
-    const tailwindPlanet = document.getElementById('tailwindPlanet');
     const pythonModal = document.getElementById('pythonModal');
-    const databaseModal = document.getElementById('databaseModal');
-    const tailwindModal = document.getElementById('tailwindModal');
     const closePythonModal = document.getElementById('closePythonModal');
-    const closeDatabaseModal = document.getElementById('closeDatabaseModal');
-    const closeTailwindModal = document.getElementById('closeTailwindModal');
+    const conceptNodes = document.querySelectorAll('.concept-node');
     
-    // Abrir modal al hacer click en el planeta Python
+    // Abrir modal al hacer click en el planeta
     pythonPlanet.addEventListener('click', () => {
-        openModal(pythonModal);
+        pythonModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Animación de entrada del modal
+        setTimeout(() => {
+            pythonModal.style.opacity = '1';
+            drawConnectionLines();
+        }, 10);
     });
     
-    // Abrir modal al hacer click en el planeta Bases de Datos
-    databasePlanet.addEventListener('click', () => {
-        openModal(databaseModal);
+    // Cerrar modal
+    closePythonModal.addEventListener('click', closeModal);
+    
+    // Cerrar modal al hacer click en el backdrop
+    pythonModal.addEventListener('click', (e) => {
+        if (e.target === pythonModal || e.target.classList.contains('modal-backdrop')) {
+            closeModal();
+        }
     });
     
-    // Abrir modal al hacer click en el planeta Tailwind
-    tailwindPlanet.addEventListener('click', () => {
-        openModal(tailwindModal);
-    });
-    
-    // Cerrar modales
-    closePythonModal.addEventListener('click', () => closeModal(pythonModal));
-    closeDatabaseModal.addEventListener('click', () => closeModal(databaseModal));
-    closeTailwindModal.addEventListener('click', () => closeModal(tailwindModal));
-    
-    // Cerrar modales al hacer click en el backdrop
-    [pythonModal, databaseModal, tailwindModal].forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal || e.target.classList.contains('modal-backdrop')) {
-                closeModal(modal);
-            }
-        });
-    });
-    
-    // Cerrar modales con ESC
+    // Cerrar modal con ESC
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            if (pythonModal.style.display === 'flex') closeModal(pythonModal);
-            if (databaseModal.style.display === 'flex') closeModal(databaseModal);
-            if (tailwindModal.style.display === 'flex') closeModal(tailwindModal);
+        if (e.key === 'Escape' && pythonModal.style.display === 'flex') {
+            closeModal();
         }
     });
     
     // Interacciones con los nodos del mapa conceptual
-    const allConceptNodes = document.querySelectorAll('.concept-node');
-    allConceptNodes.forEach(node => {
+    conceptNodes.forEach(node => {
         node.addEventListener('click', () => {
             const topic = node.dataset.topic;
             showTopicDetails(topic, node);
         });
     });
     
-    function openModal(modal) {
-        modal.style.display = 'flex';
-        // Bloquear scroll del body
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-        
-        // Animación de entrada del modal
+    function closeModal() {
+        pythonModal.style.opacity = '0';
         setTimeout(() => {
-            modal.style.opacity = '1';
-            // Esperar a que el modal esté completamente visible antes de dibujar líneas
-            setTimeout(() => {
-                drawConnectionLines(modal);
-            }, 100);
-        }, 10);
-    }
-    
-    function closeModal(modal) {
-        modal.style.opacity = '0';
-        setTimeout(() => {
-            modal.style.display = 'none';
-            // Restaurar scroll del body
+            pythonModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
         }, 300);
     }
     
@@ -776,61 +691,31 @@ function setupRoadmapSystem() {
         console.log(`Tema seleccionado: ${topic}`);
     }
     
-    function drawConnectionLines(modal) {
-        const svg = modal.querySelector('.connection-lines');
-        const nodes = modal.querySelectorAll('.concept-node');
+    function drawConnectionLines() {
+        const svg = document.querySelector('.connection-lines');
+        const nodes = document.querySelectorAll('.concept-node');
         
         // Limpiar líneas existentes
         const existingLines = svg.querySelectorAll('line');
         existingLines.forEach(line => line.remove());
         
-        // Definir conexiones según el modal
-        let connections = [];
-        
-        if (modal === pythonModal) {
-            connections = [
-                ['fundamentals', 'data-structures'],
-                ['fundamentals', 'functions'],
-                ['data-structures', 'oop'],
-                ['functions', 'modules'],
-                ['oop', 'web'],
-                ['modules', 'data-science'],
-                ['web', 'automation'],
-                ['data-science', 'automation'],
-                ['fundamentals', 'oop'],
-                ['functions', 'data-science']
-            ];
-        } else if (modal === databaseModal) {
-            connections = [
-                ['fundamentals', 'sql'],
-                ['fundamentals', 'nosql'],
-                ['sql', 'design'],
-                ['nosql', 'optimization'],
-                ['design', 'security'],
-                ['optimization', 'backup'],
-                ['security', 'cloud'],
-                ['backup', 'cloud'],
-                ['fundamentals', 'design'],
-                ['sql', 'security']
-            ];
-        } else if (modal === tailwindModal) {
-            connections = [
-                ['fundamentals', 'utilities'],
-                ['fundamentals', 'layout'],
-                ['utilities', 'components'],
-                ['layout', 'responsive'],
-                ['components', 'customization'],
-                ['responsive', 'plugins'],
-                ['customization', 'production'],
-                ['plugins', 'production'],
-                ['fundamentals', 'components'],
-                ['utilities', 'customization']
-            ];
-        }
+        // Definir conexiones lógicas
+        const connections = [
+            ['fundamentals', 'data-structures'],
+            ['fundamentals', 'functions'],
+            ['data-structures', 'oop'],
+            ['functions', 'modules'],
+            ['oop', 'web'],
+            ['modules', 'data-science'],
+            ['web', 'automation'],
+            ['data-science', 'automation'],
+            ['fundamentals', 'oop'],
+            ['functions', 'data-science']
+        ];
         
         connections.forEach(([fromTopic, toTopic]) => {
-            const fromNode = modal.querySelector(`[data-topic="${fromTopic}"]`);
-            const toNode = modal.querySelector(`[data-topic="${toTopic}"]`);
+            const fromNode = document.querySelector(`[data-topic="${fromTopic}"]`);
+            const toNode = document.querySelector(`[data-topic="${toTopic}"]`);
             
             if (fromNode && toNode) {
                 const fromRect = fromNode.getBoundingClientRect();
@@ -861,13 +746,7 @@ function setupRoadmapSystem() {
     // Redibujar líneas cuando cambie el tamaño de la ventana
     window.addEventListener('resize', () => {
         if (pythonModal.style.display === 'flex') {
-            setTimeout(() => drawConnectionLines(pythonModal), 100);
-        }
-        if (databaseModal.style.display === 'flex') {
-            setTimeout(() => drawConnectionLines(databaseModal), 100);
-        }
-        if (tailwindModal.style.display === 'flex') {
-            setTimeout(() => drawConnectionLines(tailwindModal), 100);
+            setTimeout(drawConnectionLines, 100);
         }
     });
 }

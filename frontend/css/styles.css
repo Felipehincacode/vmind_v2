@@ -445,19 +445,6 @@ a, button, .clickable, .path-node, .badge {
     align-items: center;
     margin-top: 3rem;
     padding: 2rem;
-    position: relative;
-    min-height: 300px;
-}
-
-/* Animación de molino para móvil */
-@keyframes windmill-rotation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes windmill-orbit {
-    0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
-    100% { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
 }
 
 .central-planet {
@@ -486,20 +473,18 @@ a, button, .clickable, .path-node, .badge {
     position: relative;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(93, 63, 211, 0.8) 0%, rgba(100, 26, 207, 0.6) 50%, rgba(255, 110, 199, 0.4) 100%);
+    background: linear-gradient(135deg, #5D3FD3 0%, #641ACF 50%, #FF6EC7 100%);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 
-        0 0 60px rgba(93, 63, 211, 0.6),
-        0 0 100px rgba(100, 26, 207, 0.4),
-        0 0 140px rgba(255, 110, 199, 0.3),
-        inset 0 0 20px rgba(255, 255, 255, 0.1);
-    border: none;
-    backdrop-filter: blur(15px);
-    overflow: visible;
+        0 0 50px rgba(93, 63, 211, 0.5),
+        0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 }
 
 .planet-image {
@@ -514,11 +499,6 @@ a, button, .clickable, .path-node, .badge {
     font-weight: 700;
     color: #ffffff;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-    margin-top: 12px;
-    text-align: center;
-    max-width: 150px;
-    word-wrap: break-word;
-    line-height: 1.2;
 }
 
 .central-planet:hover {
@@ -527,79 +507,6 @@ a, button, .clickable, .path-node, .badge {
 
 .central-planet:hover .planet-glow {
     opacity: 1;
-}
-
-.central-planet:hover .planet-content {
-    box-shadow: 
-        0 0 80px rgba(93, 63, 211, 0.8),
-        0 0 120px rgba(100, 26, 207, 0.6),
-        0 0 160px rgba(255, 110, 199, 0.4),
-        inset 0 0 30px rgba(255, 255, 255, 0.2);
-}
-
-/* Estilos para planetas laterales */
-.side-planet {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation: planet-float 6s ease-in-out infinite;
-    animation-delay: 1s;
-}
-
-.side-planet:hover {
-    transform: scale(1.15);
-}
-
-.side-planet:hover .planet-glow {
-    opacity: 1;
-}
-
-.side-planet:hover .planet-content {
-    box-shadow: 
-        0 0 60px rgba(58, 176, 255, 0.8),
-        0 0 90px rgba(100, 26, 207, 0.6),
-        0 0 120px rgba(255, 110, 199, 0.4),
-        inset 0 0 25px rgba(255, 255, 255, 0.2);
-}
-
-.left-planet {
-    left: -100px;
-    top: 30%;
-    transform: translateY(-50%);
-}
-
-.right-planet {
-    right: -100px;
-    top: 30%;
-    transform: translateY(-50%);
-}
-
-.side-planet .planet-content {
-    background: radial-gradient(circle, rgba(58, 176, 255, 0.8) 0%, rgba(100, 26, 207, 0.6) 50%, rgba(255, 110, 199, 0.4) 100%);
-    box-shadow: 
-        0 0 40px rgba(58, 176, 255, 0.6),
-        0 0 70px rgba(100, 26, 207, 0.4),
-        0 0 100px rgba(255, 110, 199, 0.3),
-        inset 0 0 15px rgba(255, 255, 255, 0.1);
-    border: none;
-    overflow: visible;
-}
-
-.side-planet .planet-image {
-    width: 70%;
-    height: 70%;
-}
-
-.side-planet .planet-text {
-    font-size: 0.9rem;
-    text-shadow: 0 0 12px rgba(58, 176, 255, 0.8);
-    margin-top: 12px;
-    text-align: center;
-    max-width: 100px;
-    word-wrap: break-word;
-    line-height: 1.2;
 }
 
 @keyframes planet-float {
@@ -789,85 +696,32 @@ a, button, .clickable, .path-node, .badge {
 
 .progress-container {
     margin: 3rem 0;
-    width: 100%;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.rocket-journey {
-    display: flex;
+.fuel-tank {
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
-.journey-track {
-    width: 100%;
-    height: 100px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.fuel-gauge {
+    width: 200px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
 }
 
-/* Estilos para el cohete de progreso */
-.rocket-progress {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    z-index: 10;
-}
-
-.rocket-progress.animate {
-    animation: rocket-journey-move 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.rocket-image {
-    width: 250px;
-    height: 250px;
-    transform: rotate(90deg);
-    filter: 
-        drop-shadow(0 0 30px rgba(255, 110, 199, 0.8))
-        drop-shadow(0 0 60px rgba(58, 176, 255, 0.6))
-        drop-shadow(0 0 90px rgba(93, 63, 211, 0.4))
-        drop-shadow(0 0 120px rgba(255, 110, 199, 0.3));
-}
-
-.progress-number {
-    position: absolute;
-    top: 50%;
-    right: -80px;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    font-weight: 700;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-    z-index: 5;
-    transition: color 0.3s ease;
-}
-
-@keyframes rocket-journey-move {
-    0% {
-        left: 0;
-        transform: translateY(-50%) scale(1);
-    }
-    20% {
-        transform: translateY(-50%) scale(1.05);
-    }
-    40% {
-        transform: translateY(-50%) scale(1.1);
-    }
-    60% {
-        transform: translateY(-50%) scale(1.05);
-    }
-    80% {
-        transform: translateY(-50%) scale(1.02);
-    }
-    100% {
-        left: calc(100% - 250px);
-        transform: translateY(-50%) scale(1);
-    }
+.fuel-level {
+    height: 100%;
+    width: 75%;
+    background: var(--gradient-primary);
+    border-radius: 8px;
+    animation: fuel-pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
 @keyframes fuel-pulse {
@@ -881,7 +735,49 @@ a, button, .clickable, .path-node, .badge {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
+.badges-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-normal);
+    min-width: 120px;
+    backdrop-filter: blur(10px);
+    cursor: url('../assets/UFO Cow Abduction/UFO Cow Abduction--pointer--SweezyCursors.cur') 16 16, pointer;
+}
+
+.badge:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.badge-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.badge-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-secondary);
+}
 
 /* ===== SECCIÓN SOCIAL ===== */
 .social-content {
@@ -1064,101 +960,6 @@ a, button, .clickable, .path-node, .badge {
         width: 100%;
         text-align: center;
     }
-    
-    /* Estilos móvil para roadmap */
-    .roadmap-container {
-        min-height: 400px;
-        padding: 1rem;
-        overflow: hidden;
-    }
-    
-    .central-planet {
-        width: 120px;
-        height: 120px;
-        animation: windmill-rotation 20s linear infinite;
-    }
-    
-    .side-planet {
-        width: 80px;
-        height: 80px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    .left-planet {
-        left: 50%;
-        top: 50%;
-        animation: windmill-orbit 15s linear infinite;
-    }
-    
-    .right-planet {
-        left: 50%;
-        top: 50%;
-        animation: windmill-orbit 15s linear infinite reverse;
-    }
-    
-    .side-planet .planet-image {
-        width: 60%;
-        height: 60%;
-    }
-    
-    .side-planet .planet-text {
-        font-size: 0.8rem;
-        max-width: 70px;
-    }
-    
-    .planet-text {
-        font-size: 1rem;
-        max-width: 100px;
-    }
-    
-    /* Estilos móvil para modales */
-    .modal-content {
-        width: 95%;
-        height: 90vh;
-        margin: 1rem;
-    }
-    
-    /* Estilos móvil para el cohete */
-    .journey-track {
-        height: 200px;
-    }
-    
-    .rocket-image {
-        width: 150px;
-        height: 150px;
-    }
-    
-    .progress-number {
-        font-size: 1.5rem;
-        right: -60px;
-    }
-    
-    .modal-header h3 {
-        font-size: 1.4rem;
-    }
-    
-    .concept-node {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .node-planet {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .node-planet-image {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .node-label {
-        font-size: 0.7rem;
-        max-width: 60px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1190,76 +991,6 @@ a, button, .clickable, .path-node, .badge {
     
     .nav-logo .logo-text {
         font-size: 1.2rem;
-    }
-    
-    /* Estilos adicionales para móvil pequeño */
-    .roadmap-container {
-        min-height: 350px;
-    }
-    
-    .central-planet {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .side-planet {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .side-planet .planet-text {
-        font-size: 0.7rem;
-        max-width: 60px;
-    }
-    
-    .planet-text {
-        font-size: 0.9rem;
-        max-width: 80px;
-    }
-    
-    .modal-content {
-        width: 98%;
-        height: 95vh;
-        margin: 0.5rem;
-    }
-    
-    .modal-header h3 {
-        font-size: 1.2rem;
-    }
-    
-    .concept-node {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .node-planet {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .node-planet-image {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .node-label {
-        font-size: 0.6rem;
-        max-width: 50px;
-    }
-    
-    /* Estilos móvil pequeño para el cohete */
-    .journey-track {
-        height: 150px;
-    }
-    
-    .rocket-image {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .progress-number {
-        font-size: 1.2rem;
-        right: -50px;
     }
 }
 
