@@ -73,10 +73,6 @@
                     El mundo está diseñado para consumir tu atención, para drenar tu dopamina y para dejarte abrumado. 
                     Mantener el enfoque en lo que realmente importa se ha convertido en una batalla diaria.
                 </p>
-                
-
-                
-
             </div>
         </div>
     </section>
@@ -93,15 +89,31 @@
                     el enfoque y la retención del conocimiento. Vmind te ayuda a hackear tu propio cerebro.
                 </p>
                 
-                <div class="roadmap-container">
-                    <div class="central-planet" id="pythonPlanet">
-                        <div class="planet-glow"></div>
-                        <div class="planet-content">
-                            <img src="../assets/ui elements/planeta1.png" alt="Planeta Python" class="planet-image">
-                            <span class="planet-text">Python</span>
-                        </div>
-                    </div>
-                </div>
+                                 <div class="roadmap-container">
+                     <div class="central-planet" id="pythonPlanet">
+                         <div class="planet-glow"></div>
+                         <div class="planet-content">
+                             <img src="../assets/ui elements/planeta1.png" alt="Planeta Python" class="planet-image">
+                             <span class="planet-text">Python</span>
+                         </div>
+                     </div>
+                     
+                     <div class="side-planet left-planet" id="databasePlanet">
+                         <div class="planet-glow"></div>
+                         <div class="planet-content">
+                             <img src="../assets/ui elements/planeta2.png" alt="Planeta Bases de Datos" class="planet-image">
+                             <span class="planet-text">Bases de Datos</span>
+                         </div>
+                     </div>
+                     
+                     <div class="side-planet right-planet" id="tailwindPlanet">
+                         <div class="planet-glow"></div>
+                         <div class="planet-content">
+                             <img src="../assets/ui elements/planeta3.png" alt="Planeta Tailwind" class="planet-image">
+                             <span class="planet-text">Tailwind</span>
+                         </div>
+                     </div>
+                 </div>
 
                 <!-- Modal de Mapa Conceptual Python -->
                 <div class="concept-map-modal" id="pythonModal">
@@ -197,29 +209,16 @@
                     Cada paso que das es un nuevo planeta que exploras y un nuevo logro que conquistas.
                 </p>
                 
-                <div class="progress-container">
-                    <div class="fuel-tank">
-                        <div class="fuel-gauge">
-                            <div class="fuel-level" id="fuelLevel"></div>
-                        </div>
-                        <span class="fuel-text">Progreso: 75%</span>
-                    </div>
-                </div>
-                
-                <div class="badges-container">
-                    <div class="badge" data-badge="explorer">
-                        <div class="badge-icon">🌟</div>
-                        <span class="badge-text">Explorador</span>
-                    </div>
-                    <div class="badge" data-badge="conqueror">
-                        <div class="badge-icon">⚡</div>
-                        <span class="badge-text">Dominador</span>
-                    </div>
-                    <div class="badge" data-badge="achiever">
-                        <div class="badge-icon">🏆</div>
-                        <span class="badge-text">Conquistador</span>
-                    </div>
-                </div>
+                                 <div class="progress-container">
+                     <div class="rocket-journey fade-in-up">
+                         <div class="journey-track">
+                             <div class="rocket-progress" id="rocketProgress">
+                                 <img src="../assets/ui elements/elemento5.png" alt="Cohete" class="rocket-image">
+                                 <div class="progress-number" id="progressNumber">0%</div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
             </div>
         </div>
     </section>
@@ -292,6 +291,160 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal de Mapa Conceptual Bases de Datos -->
+    <div class="concept-map-modal" id="databaseModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🌌 Mapa Conceptual: Bases de Datos</h3>
+                <button class="modal-close" id="closeDatabaseModal">×</button>
+            </div>
+            <div class="concept-map-container">
+                <svg class="connection-lines" width="100%" height="100%">
+                    <defs>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#3AB0FF;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF6EC7;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                
+                <div class="concept-node" data-topic="fundamentals" style="top: 20%; left: 50%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta1.png" alt="Fundamentos" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Fundamentos DB</div>
+                </div>
+                
+                <div class="concept-node" data-topic="sql" style="top: 15%; left: 25%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta2.png" alt="SQL" class="node-planet-image">
+                    </div>
+                    <div class="node-label">SQL</div>
+                </div>
+                
+                <div class="concept-node" data-topic="nosql" style="top: 15%; left: 75%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta3.png" alt="NoSQL" class="node-planet-image">
+                    </div>
+                    <div class="node-label">NoSQL</div>
+                </div>
+                
+                <div class="concept-node" data-topic="design" style="top: 50%; left: 20%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta4.png" alt="Diseño" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Diseño DB</div>
+                </div>
+                
+                <div class="concept-node" data-topic="optimization" style="top: 50%; left: 80%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta1.png" alt="Optimización" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Optimización</div>
+                </div>
+                
+                <div class="concept-node" data-topic="security" style="top: 80%; left: 30%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta2.png" alt="Seguridad" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Seguridad</div>
+                </div>
+                
+                <div class="concept-node" data-topic="backup" style="top: 80%; left: 70%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta3.png" alt="Backup" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Backup & Recovery</div>
+                </div>
+                
+                <div class="concept-node" data-topic="cloud" style="top: 65%; left: 50%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta4.png" alt="Cloud" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Cloud DB</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Mapa Conceptual Tailwind -->
+    <div class="concept-map-modal" id="tailwindModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🌌 Mapa Conceptual: Tailwind CSS</h3>
+                <button class="modal-close" id="closeTailwindModal">×</button>
+            </div>
+            <div class="concept-map-container">
+                <svg class="connection-lines" width="100%" height="100%">
+                    <defs>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#3AB0FF;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF6EC7;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                
+                <div class="concept-node" data-topic="fundamentals" style="top: 20%; left: 50%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta1.png" alt="Fundamentos" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Fundamentos</div>
+                </div>
+                
+                <div class="concept-node" data-topic="utilities" style="top: 15%; left: 25%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta2.png" alt="Utilidades" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Utilidades</div>
+                </div>
+                
+                <div class="concept-node" data-topic="layout" style="top: 15%; left: 75%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta3.png" alt="Layout" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Layout & Grid</div>
+                </div>
+                
+                <div class="concept-node" data-topic="components" style="top: 50%; left: 20%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta4.png" alt="Componentes" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Componentes</div>
+                </div>
+                
+                <div class="concept-node" data-topic="responsive" style="top: 50%; left: 80%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta1.png" alt="Responsive" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Responsive Design</div>
+                </div>
+                
+                <div class="concept-node" data-topic="customization" style="top: 80%; left: 30%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta2.png" alt="Personalización" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Personalización</div>
+                </div>
+                
+                <div class="concept-node" data-topic="plugins" style="top: 80%; left: 70%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta3.png" alt="Plugins" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Plugins</div>
+                </div>
+                
+                <div class="concept-node" data-topic="production" style="top: 65%; left: 50%;">
+                    <div class="node-planet">
+                        <img src="../assets/ui elements/planeta4.png" alt="Producción" class="node-planet-image">
+                    </div>
+                    <div class="node-label">Producción</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>
