@@ -64,14 +64,14 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--cursor--SweezyCursors.cur') 1 1, auto;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--cursor--SweezyCursors.cur') 1 1, auto;
     margin: 0;
     padding: 0;
 }
 
 /* Cursor personalizado para elementos interactivos */
 a, button, .clickable, .path-node, .badge {
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
 }
 
 /* ===== NAVBAR ===== */
@@ -118,7 +118,7 @@ a, button, .clickable, .path-node, .badge {
     color: var(--text-primary);
     border-radius: var(--border-radius);
     font-weight: 500;
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     transition: var(--transition-normal);
     font-size: 0.9rem;
 }
@@ -324,7 +324,7 @@ a, button, .clickable, .path-node, .badge {
     font-weight: 700;
     border: none;
     border-radius: var(--border-radius-xl);
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     transition: var(--transition-normal);
     overflow: hidden;
     background: linear-gradient(135deg, #5D3FD3 0%, #641ACF 50%, #FF6EC7 100%);
@@ -464,7 +464,7 @@ a, button, .clickable, .path-node, .badge {
     position: relative;
     width: 200px;
     height: 200px;
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     animation: planet-float 6s ease-in-out infinite;
 }
@@ -542,7 +542,7 @@ a, button, .clickable, .path-node, .badge {
     position: absolute;
     width: 120px;
     height: 120px;
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     animation: planet-float 6s ease-in-out infinite;
     animation-delay: 1s;
@@ -667,7 +667,7 @@ a, button, .clickable, .path-node, .badge {
     border: none;
     color: #ffffff;
     font-size: 2rem;
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     padding: 0.5rem;
     border-radius: 50%;
     transition: all 0.3s ease;
@@ -703,7 +703,7 @@ a, button, .clickable, .path-node, .badge {
 .concept-node {
     position: absolute;
     z-index: 10;
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -771,7 +771,7 @@ a, button, .clickable, .path-node, .badge {
     font-weight: 600;
     font-size: 0.9rem;
     transition: var(--transition-normal);
-    cursor: url('assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
+    cursor: url('../assets/Neon Gradient Arrow & Rocket/Neon Gradient Arrow & Rocket--pointer--SweezyCursors.cur') 1 1, pointer;
     box-shadow: var(--shadow-glow);
 }
 
@@ -962,7 +962,7 @@ a, button, .clickable, .path-node, .badge {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition-normal);
-    cursor: url('assets/UFO Cow Abduction/UFO Cow Abduction--pointer--SweezyCursors.cur') 16 16, pointer;
+    cursor: url('../assets/UFO Cow Abduction/UFO Cow Abduction--pointer--SweezyCursors.cur') 16 16, pointer;
 }
 
 .leaderboard-item:last-child {
