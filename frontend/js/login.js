@@ -194,43 +194,39 @@ class LoginManager {
 
     async performLogin(formData) {
         try {
-            // Usar el cliente API para hacer la petición real
-            const response = await window.apiClient.login({
-                username: formData.username,
-                password: formData.password
-            });
+            // Usar el sistema de usuarios de prueba
+            const user = TestUsers.verifyCredentials(formData.username, formData.password);
             
-            // La respuesta exitosa del backend debe tener esta estructura:
-            // {
-            //   success: true,
-            //   data: {
-            //     user: { id, username, email, ... },
-            //     token: "jwt-token",
-            //     refreshToken: "refresh-token" (opcional)
-            //   },
-            //   message: "Login exitoso"
-            // }
-            
-            return {
-                success: true,
-                user: response.data.user,
-                token: response.data.token,
-                refreshToken: response.data.refreshToken,
-                message: response.message || 'Login exitoso'
-            };
-            
-        } catch (error) {
-            // Manejar diferentes tipos de errores
-            if (error instanceof ApiError) {
+            if (user) {
+                // Simular delay de red
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                return {
+                    success: true,
+                    user: {
+                        id: user.id,
+                        username: user.username,
+                        email: user.email,
+                        name: user.name,
+                        age: user.age,
+                        points: user.points,
+                        streak: user.streak,
+                        level: user.level,
+                        planet: user.planet
+                    },
+                    token: 'demo-jwt-token-' + Date.now(),
+                    refreshToken: 'demo-refresh-token',
+                    message: 'Login exitoso'
+                };
+            } else {
                 return {
                     success: false,
-                    message: error.message,
-                    errors: error.data.errors || {},
-                    status: error.status
+                    message: 'Usuario o contraseña incorrectos'
                 };
             }
             
-            // Error desconocido
+        } catch (error) {
+            console.error('Error durante el login:', error);
             return {
                 success: false,
                 message: 'Error inesperado. Intenta de nuevo.',

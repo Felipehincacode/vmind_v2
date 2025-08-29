@@ -241,3 +241,4 @@ Has obtenido un **wizard de registro inmersivo de nivel profesional** que:
 - **Duración**: ~3-5 minutos para completar
 - **Datos**: 6 categorías de información personalizada
 - **Resultado**: Usuario registrado + perfil de aprendizaje completo
+

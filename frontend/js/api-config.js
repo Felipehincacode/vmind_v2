@@ -246,3 +246,4 @@ window.apiClient = new ApiClient();
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { ApiClient, ApiConfig, ApiError };
 }
+

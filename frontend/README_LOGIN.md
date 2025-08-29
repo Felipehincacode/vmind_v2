@@ -128,3 +128,4 @@ Tu sistema de login mantiene la perfecta consistencia visual con tu página prin
 
 **Archivo principal**: `login.html`
 **Demo**: Usuario `demo`, Contraseña `demo123`
+

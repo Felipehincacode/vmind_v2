@@ -414,3 +414,4 @@ getBaseURL() {
 Con esta implementación, tu frontend se conectará automáticamente con la base de datos SQL y tendrás un sistema de autenticación completo y seguro.
 
 **El frontend ya está 100% preparado para esta integración.** 🚀
+
