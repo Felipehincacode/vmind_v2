@@ -345,14 +345,15 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
 }
 
 .cerebrito-modal.active {
@@ -363,39 +364,136 @@ body {
 .cerebrito-content {
     text-align: center;
     color: white;
-    max-width: 500px;
-    padding: 2rem;
+    max-width: 600px;
+    padding: 3rem;
+    background: rgba(20, 20, 30, 0.95);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.cerebrito-modal.active .cerebrito-content {
+    transform: scale(1);
+}
+
+.cerebrito-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
 }
 
 .cerebrito-image {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     margin: 0 auto 2rem;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 80px rgba(255, 255, 255, 0.4);
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    animation: cerebritoPulse 2s infinite;
 }
 
 .cerebrito-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cerebrito-image:hover img {
+    transform: scale(1.05);
 }
 
 .cerebrito-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 0 30px rgba(93, 63, 211, 0.5);
+    animation: titleGlow 2s ease-in-out infinite alternate;
 }
 
 .cerebrito-message {
-    font-size: 1.2rem;
-    line-height: 1.5;
+    font-size: 1.3rem;
+    line-height: 1.6;
     color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.cerebrito-timer {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.cerebrito-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: var(--transition-normal);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cerebrito-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+@keyframes cerebritoPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 80px rgba(255, 255, 255, 0.4);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 120px rgba(255, 255, 255, 0.6);
+    }
+}
+
+@keyframes titleGlow {
+    0% { 
+        text-shadow: 0 0 30px rgba(93, 63, 211, 0.5);
+    }
+    100% { 
+        text-shadow: 0 0 50px rgba(93, 63, 211, 0.8);
+    }
+}
+
+/* Efecto de entrada del modal */
+.cerebrito-modal.active {
+    animation: modalShake 0.5s ease-in-out;
+}
+
+@keyframes modalShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
 /* Modal de Planetas Mejorado */
@@ -616,6 +714,48 @@ body {
     color: white;
     font-size: 12px;
     font-weight: bold;
+}
+
+.task-checkbox.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.task-item.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.task-item.disabled:hover {
+    background: rgba(255, 255, 255, 0.02);
+    transform: none;
+}
+
+/* Indicador de sesión */
+.session-info {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.session-limit {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.limit-icon {
+    font-size: 1.2rem;
+    color: #f59e0b;
+}
+
+.limit-text {
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .task-content {
@@ -934,4 +1074,171 @@ body {
 
 .note-date {
     font-size: 0.8rem;
+}
+
+/* Toast Notification */
+.toast-container {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 15000;
+    pointer-events: none;
+}
+
+.toast-notification {
+    background: rgba(20, 20, 30, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto;
+    min-width: 350px;
+    position: relative;
+    overflow: hidden;
+}
+
+.toast-notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.toast-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.toast-message {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 50%;
+    transition: var(--transition-normal);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+/* Animación de entrada */
+@keyframes toastSlideIn {
+    0% {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastSlideOut {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.toast-notification.show {
+    animation: toastSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.toast-notification.hide {
+    animation: toastSlideOut 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Efecto de partículas para el toast */
+.toast-notification::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(93, 63, 211, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.toast-notification.show::after {
+    opacity: 1;
+    animation: toastGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes toastGlow {
+    0% {
+        background: radial-gradient(circle at 50% 50%, rgba(93, 63, 211, 0.1) 0%, transparent 70%);
+    }
+    100% {
+        background: radial-gradient(circle at 50% 50%, rgba(255, 110, 199, 0.1) 0%, transparent 70%);
+    }
 }

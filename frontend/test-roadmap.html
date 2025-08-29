@@ -60,11 +60,13 @@
     <!-- Modal del Cerebrito -->
     <div class="cerebrito-modal" id="cerebritoModal">
         <div class="cerebrito-content">
+            <button class="cerebrito-close" id="closeCerebritoModal">×</button>
             <div class="cerebrito-image">
                 <img src="assets/cerebrito.jpg" alt="Cerebrito">
             </div>
             <h2 class="cerebrito-title">¡Despacio, cerebrito! 🧠</h2>
-            <p class="cerebrito-message">Solo puedes marcar una tarea a la vez. ¡Tómate tu tiempo para aprender!</p>
+            <p class="cerebrito-message">Solo puedes marcar una tarea por sesión. Guarda tu progreso y vuelve a entrar para marcar otra tarea.</p>
+            <div class="cerebrito-timer" id="cerebritoTimer">Cerrando en 3 segundos...</div>
         </div>
     </div>
 
@@ -116,6 +118,20 @@
                 <button class="btn-secondary" id="closePlanetBtn">Cerrar</button>
                 <button class="btn-primary" id="savePlanetBtn">Guardar Progreso</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer">
+        <div class="toast-notification" id="toastNotification">
+            <div class="toast-icon">
+                <img src="assets/ui_elements/elemento5.png" alt="Success">
+            </div>
+            <div class="toast-content">
+                <h4 class="toast-title">¡Éxito!</h4>
+                <p class="toast-message" id="toastMessage">Progreso guardado exitosamente</p>
+            </div>
+            <button class="toast-close" id="toastClose">×</button>
         </div>
     </div>
 
