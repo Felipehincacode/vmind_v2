@@ -223,6 +223,11 @@ class Dashboard {
         this.setupResourceQuillEditor();
         this.renderRoadmap();
         this.setupDragAndDrop();
+        
+        // Asegurar que el roadmap se inicialice correctamente después de que todo esté listo
+        setTimeout(() => {
+            this.initializeRoadmap();
+        }, 500);
     }
 
     loadUserData() {
@@ -304,11 +309,18 @@ class Dashboard {
         });
 
         // Controles del slider
-        document.getElementById('prevPlanet').addEventListener('click', () => {
+        const prevBtn = document.getElementById('prevPlanet');
+        const nextBtn = document.getElementById('nextPlanet');
+        
+        console.log('Setting up slider controls:', prevBtn, nextBtn);
+        
+        prevBtn.addEventListener('click', () => {
+            console.log('Prev button clicked');
             this.navigatePlanet(-1);
         });
 
-        document.getElementById('nextPlanet').addEventListener('click', () => {
+        nextBtn.addEventListener('click', () => {
+            console.log('Next button clicked');
             this.navigatePlanet(1);
         });
 
@@ -364,6 +376,14 @@ class Dashboard {
                 this.closeResourceModal();
                 this.closePlanetModal();
             }
+        });
+
+        // Listener para resize de ventana
+        window.addEventListener('resize', () => {
+            // Reajustar el roadmap cuando cambie el tamaño de la ventana
+            setTimeout(() => {
+                this.scrollToPlanet(this.currentPlanetIndex);
+            }, 100);
         });
     }
 
@@ -575,10 +595,33 @@ class Dashboard {
         this.updateRoadmapProgress();
         this.updateSliderControls();
         
-        // Centrar el primer planeta al cargar
+        // Debug: verificar que los planetas se renderizaron
+        console.log('Planets rendered:', document.querySelectorAll('.planet-card').length);
+    }
+
+    initializeRoadmap() {
+        // Asegurar que el primer planeta esté centrado y visible
+        this.currentPlanetIndex = 0;
+        
+        // Forzar la posición inicial sin transform para asegurar visibilidad
+        const sliderTrack = document.getElementById('sliderTrack');
+        const sliderContainer = document.querySelector('.slider-container');
+        
+        // Debug: verificar que los elementos existen
+        console.log('Slider elements:', {
+            sliderTrack: !!sliderTrack,
+            sliderContainer: !!sliderContainer,
+            containerWidth: sliderContainer?.clientWidth,
+            trackWidth: sliderTrack?.scrollWidth
+        });
+        
+        sliderTrack.style.transform = 'translateX(0px)';
+        
+        // Esperar un momento y luego aplicar el centrado
         setTimeout(() => {
             this.scrollToPlanet(0);
-            console.log('Roadmap rendered, first planet centered');
+            this.updateSliderControls();
+            console.log('Roadmap initialized successfully');
         }, 100);
     }
 
@@ -605,11 +648,17 @@ class Dashboard {
         const prevBtn = document.getElementById('prevPlanet');
         const nextBtn = document.getElementById('nextPlanet');
         
+        // Habilitar/deshabilitar botones basado en el índice actual
         prevBtn.disabled = this.currentPlanetIndex === 0;
         nextBtn.disabled = this.currentPlanetIndex === 9;
+        
+        // Agregar clases visuales para el estado disabled
+        prevBtn.classList.toggle('disabled', this.currentPlanetIndex === 0);
+        nextBtn.classList.toggle('disabled', this.currentPlanetIndex === 9);
     }
 
     navigatePlanet(direction) {
+        console.log('navigatePlanet called with direction:', direction, 'currentIndex:', this.currentPlanetIndex);
         const newIndex = this.currentPlanetIndex + direction;
         if (newIndex >= 0 && newIndex <= 9) {
             this.currentPlanetIndex = newIndex;
@@ -620,35 +669,62 @@ class Dashboard {
 
     scrollToPlanet(index) {
         const sliderTrack = document.getElementById('sliderTrack');
-        const cardWidth = 232; // card width (200) + gap (32)
-        const containerWidth = sliderTrack.clientWidth;
-        const offset = Math.max(0, index * cardWidth - (containerWidth / 2) + (cardWidth / 2));
+        const sliderContainer = document.querySelector('.slider-container');
+        const cardWidth = 200; // Ancho de cada tarjeta
+        const gap = 32; // Gap entre tarjetas
+        const totalCardWidth = cardWidth + gap;
+        const containerWidth = sliderContainer.clientWidth;
         
-        console.log('Scrolling to planet', index, 'offset:', offset, 'containerWidth:', containerWidth);
-        sliderTrack.style.transform = `translateX(-${offset}px)`;
-        this.currentPlanetIndex = index;
-        this.updateSliderControls();
+        // Asegurar que el índice esté dentro del rango válido
+        const clampedIndex = Math.max(0, Math.min(9, index));
+        
+        // Calcular la posición para centrar el planeta
+        const targetPosition = clampedIndex * totalCardWidth;
+        const centerOffset = (containerWidth - cardWidth) / 2;
+        const finalPosition = targetPosition - centerOffset;
+        
+        // Calcular el máximo scroll posible
+        const totalWidth = 10 * totalCardWidth;
+        const maxScroll = Math.max(0, totalWidth - containerWidth);
+        const clampedPosition = Math.max(0, Math.min(maxScroll, finalPosition));
+        
+        console.log('scrollToPlanet:', {
+            index: clampedIndex,
+            containerWidth,
+            targetPosition,
+            centerOffset,
+            finalPosition: clampedPosition,
+            maxScroll
+        });
+        
+        // Aplicar la transformación
+        sliderTrack.style.transform = `translateX(-${clampedPosition}px)`;
+        this.currentPlanetIndex = clampedIndex;
+        
+        // Actualizar la clase active en los planetas
+        document.querySelectorAll('.planet-card').forEach((card, i) => {
+            card.classList.toggle('active', i === clampedIndex);
+        });
     }
 
     setupDragAndDrop() {
         const sliderTrack = document.getElementById('sliderTrack');
+        let isDragging = false;
         let startX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
+        let startScrollLeft = 0;
         
         sliderTrack.addEventListener('mousedown', (e) => {
-            this.isDragging = true;
+            isDragging = true;
             startX = e.clientX;
             
             // Obtener la posición actual del transform
             const transform = window.getComputedStyle(sliderTrack).transform;
             if (transform !== 'none') {
                 const matrix = new DOMMatrix(transform);
-                prevTranslate = matrix.m41;
+                startScrollLeft = -matrix.m41;
             } else {
-                prevTranslate = 0;
+                startScrollLeft = 0;
             }
-            currentTranslate = prevTranslate;
             
             sliderTrack.style.cursor = 'grabbing';
             sliderTrack.classList.add('dragging');
@@ -656,56 +732,74 @@ class Dashboard {
         });
         
         sliderTrack.addEventListener('mousemove', (e) => {
-            if (!this.isDragging) return;
+            if (!isDragging) return;
             e.preventDefault();
             
             const currentX = e.clientX;
-            const diff = currentX - startX;
-            currentTranslate = prevTranslate + diff;
+            const diff = startX - currentX;
+            const newScrollLeft = startScrollLeft + diff;
             
             // Limitar el rango de movimiento
-            const maxTranslate = 0;
-            const minTranslate = -(9 * 232 - sliderTrack.clientWidth + 64);
-            currentTranslate = Math.max(minTranslate, Math.min(maxTranslate, currentTranslate));
+            const sliderContainer = document.querySelector('.slider-container');
+            const containerWidth = sliderContainer.clientWidth;
+            const cardWidth = 200;
+            const gap = 32;
+            const totalCardWidth = cardWidth + gap;
+            const totalWidth = 10 * totalCardWidth; // 10 planetas * totalCardWidth
+            const maxScroll = Math.max(0, totalWidth - containerWidth);
+            const clampedScroll = Math.max(0, Math.min(maxScroll, newScrollLeft));
             
-            sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+            sliderTrack.style.transform = `translateX(-${clampedScroll}px)`;
         });
         
         sliderTrack.addEventListener('mouseup', () => {
-            if (this.isDragging) {
-                this.isDragging = false;
+            if (isDragging) {
+                isDragging = false;
                 sliderTrack.style.cursor = 'grab';
                 sliderTrack.classList.remove('dragging');
                 
                 // Snap al planeta más cercano
-                this.snapToNearestPlanet(currentTranslate);
+                this.snapToNearestPlanet();
             }
         });
         
         sliderTrack.addEventListener('mouseleave', () => {
-            if (this.isDragging) {
-                this.isDragging = false;
+            if (isDragging) {
+                isDragging = false;
                 sliderTrack.style.cursor = 'grab';
                 sliderTrack.classList.remove('dragging');
-                this.snapToNearestPlanet(currentTranslate);
+                this.snapToNearestPlanet();
             }
         });
         
         // Prevenir selección de texto durante el drag
         sliderTrack.addEventListener('selectstart', (e) => {
-            if (this.isDragging) {
+            if (isDragging) {
                 e.preventDefault();
             }
         });
     }
     
-    snapToNearestPlanet(translateX) {
-        const cardWidth = 232;
-        const containerWidth = document.getElementById('sliderTrack').clientWidth;
-        const centerOffset = containerWidth / 2 - cardWidth / 2;
+    snapToNearestPlanet() {
+        const sliderTrack = document.getElementById('sliderTrack');
+        const sliderContainer = document.querySelector('.slider-container');
+        const transform = window.getComputedStyle(sliderTrack).transform;
+        let currentTranslate = 0;
+        
+        if (transform !== 'none') {
+            const matrix = new DOMMatrix(transform);
+            currentTranslate = -matrix.m41;
+        }
+        
+        const cardWidth = 200;
+        const gap = 32;
+        const totalCardWidth = cardWidth + gap;
+        const containerWidth = sliderContainer.clientWidth;
         
         // Calcular qué planeta está más cerca del centro
-        const planetIndex = Math.round((-translateX + centerOffset) / cardWidth);
+        const centerOffset = (containerWidth - cardWidth) / 2;
+        const centerPosition = currentTranslate + centerOffset;
+        const planetIndex = Math.round(centerPosition / totalCardWidth);
         const clampedIndex = Math.max(0, Math.min(9, planetIndex));
         
         this.currentPlanetIndex = clampedIndex;
